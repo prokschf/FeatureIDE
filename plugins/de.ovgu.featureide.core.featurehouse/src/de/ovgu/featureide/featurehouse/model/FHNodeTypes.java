@@ -73,4 +73,11 @@ public interface FHNodeTypes {
 	static final String HASKELL_NODE_DEFINITIONS = "definitions";
 	static final String HASKELL_NODE_DATA_DECLARATION = "datadecl";
 	static final String HASKELL_NODE_SIMPLE_TYPE = "simpletype";
+	
+	//AsmetaL specific node types
+	static final String ASMETAL_MODULE_DECLARATION = "ModuleDeclaration";
+	static final String ASMETAL_RULE = "RuleDeclaration";
+	static final String ASMETAL_FUNCTION = "Function";
+	static final String ASMETAL_INVARIANT = "Invariant";
+	static final String ASMETAL_SIGNATURE = "Signature";
 }

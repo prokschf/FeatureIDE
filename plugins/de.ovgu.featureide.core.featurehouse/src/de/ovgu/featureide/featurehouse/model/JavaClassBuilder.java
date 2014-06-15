@@ -311,7 +311,7 @@ public class JavaClassBuilder extends ClassBuilder {
 	}
 
 	@Override
-	public void caseJMLInvariant(FSTTerminal terminal) {
+	public void caseInvariant(FSTTerminal terminal) {
 		/*
 		 * FSTNonTerminal par =
 		 * (FSTNonTerminal)terminal.getParent().getParent().getParent(); if

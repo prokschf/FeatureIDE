@@ -397,7 +397,7 @@ public class Outline extends ViewPart implements ICurrentBuildListener, IPropert
 							if (control != null && !control.isDisposed()) {
 								if ("model.xml".equals(file.getName())) {
 									selectedOutlineType = OutlineLabelProvider.OUTLINE_FEATURE_MODEL;
-								} else if (file.getFileExtension().compareTo("java") == 0 || file.getFileExtension().compareTo("jak") == 0) {
+								} else if (file.getFileExtension().compareTo("java") == 0 || file.getFileExtension().compareTo("jak") == 0 || (file.getFileExtension().compareTo("asm") == 0)) {
 									selectedOutlineType = OutlineLabelProvider.OUTLINE_CODE;
 								} else {
 									selectedOutlineType = OutlineLabelProvider.OUTLINE_NOT_AVAILABLE;

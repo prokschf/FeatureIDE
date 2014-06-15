@@ -103,6 +103,7 @@ public class FeatureHouseModelBuilder implements FHNodeTypes {
 		if (!completeModel) {
 			model.reset();
 		}	
+		
 		for (FSTNode node : (ArrayList<FSTNode>)nodes.clone()) {
 			if (NODE_TYPE_FEATURE.equals(node.getType())) {
 				caseAddFeature(node);
@@ -110,6 +111,8 @@ public class FeatureHouseModelBuilder implements FHNodeTypes {
 				caseAddClass(node);
 			} else if(NODE_COMPILATIONUNIT.equals(node.getType())){
 				caseCompileUnit(node);
+			} else if(ASMETAL_MODULE_DECLARATION.equals(node.getType())){
+				caseClassDeclaration(node);
 			} else if (JAVA_NODE_CLASS_DECLARATION.equals(node.getType())) {
 				caseClassDeclaration(node);
 			} else if (C_NODE_SEQUENCE_CODEUNIT_TOPLEVEL.equals(node.getType())) {
@@ -242,8 +245,10 @@ public class FeatureHouseModelBuilder implements FHNodeTypes {
 					} else if (JML_SPEC_CASE_SEQ.equals(type)) {
 						classBuilder.caseJMLSpecCaseSeq(terminal);
 					} else if (JML_INVARIANT.equals(type)) {
-						classBuilder.caseJMLInvariant(terminal);
-					}					
+						classBuilder.caseInvariant(terminal);
+					} else if (FHNodeTypes.ASMETAL_RULE.equals(type)) {
+						classBuilder.caseMethodDeclaration(terminal);
+					}
 				} else if (child instanceof FSTNonTerminal) {
 					if (JAVA_NODE_INNER_CLASS_TYPE.equals(type)) {
 						String name = child.getName();
@@ -253,6 +258,8 @@ public class FeatureHouseModelBuilder implements FHNodeTypes {
 						
 						classFragmentStack.peek().add(newFragment);
 						classFragmentStack.push(newFragment);
+					} else if (ASMETAL_SIGNATURE.equals(type)) {
+						classBuilder.caseSignatureDeclaration(child);
 					} else {
 						classFragmentStack.push(classFragmentStack.peek());
 					}

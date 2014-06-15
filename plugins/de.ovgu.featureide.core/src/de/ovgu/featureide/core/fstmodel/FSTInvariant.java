@@ -20,6 +20,8 @@
  */
 package de.ovgu.featureide.core.fstmodel;
 
+import java.util.LinkedList;
+
 /**
  * description
  * 
@@ -33,7 +35,10 @@ public class FSTInvariant extends RoleElement {
 	}
 
 	RoleTypes parentRoleType;
-
+	private LinkedList<String> parameterTypes;
+	boolean hasProperIdentifier;
+	boolean isAsmetalInvariant;
+	
 	/**
 	 * @return the parentRoleType
 	 */
@@ -48,6 +53,8 @@ public class FSTInvariant extends RoleElement {
 	 */
 	public FSTInvariant(String name, String body) {
 		super(name, "", "", body, -1, -1);
+		hasProperIdentifier = false;
+		isAsmetalInvariant = false;
 	}
 
 	/**
@@ -59,18 +66,47 @@ public class FSTInvariant extends RoleElement {
 	 * @param endLine
 	 */
 
-	public FSTInvariant(String name, String body, int beginLine, int endLine) {
+	public FSTInvariant(String name, String body, LinkedList<String> _parameterTypes, int beginLine, int endLine, boolean _hasProperIdentifier, boolean _isAsmetalInvaraint) 
+	{
 		super(name, "", "", body, beginLine, endLine);
+		hasProperIdentifier = _hasProperIdentifier;
+		isAsmetalInvariant = _isAsmetalInvaraint;
+		parameterTypes = _parameterTypes;
 	}
 
+	public FSTInvariant(String name, String body, int beginLine, int endLine) {
+		super(name, "", "", body, beginLine, endLine);
+		hasProperIdentifier = false;
+		isAsmetalInvariant = false;		
+	}
+
+	@Deprecated
 	public int getUniqueIdentifier() {
-		return (body + beginLine + getFile()).hashCode();
+			return (body + beginLine + getFile()).hashCode();
 	}
 
 	@Override
-	public String getFullName() {
-		String name = body.replaceAll("  ", "").replace((char) 10, ' ').replaceFirst("invariant ", "");
-		return ((name.length() > 25 ? name.substring(0, 25) + "..." : name));
+	public String getFullName() 
+	{
+		
+		if (isAsmetalInvariant)
+		{
+			StringBuilder fullname = new StringBuilder();
+			fullname.append(hasProperIdentifier ? name : "[line " + beginLine + "]");
+			fullname.append(" over ");
+			for (int i = 0; i < parameterTypes.size(); i++) {
+				if (i > 0)
+					fullname.append(", ");
+				fullname.append(parameterTypes.get(i));
+			}
+			return fullname.toString();
+			
+		}else
+		{
+			//JML Invariant
+			String name = body.replaceAll("  ", "").replace((char) 10, ' ').replaceFirst("invariant ", "");
+			return ((name.length() > 25 ? name.substring(0, 25) + "..." : name));
+		}
 	}
 
 	public boolean inRefinementGroup() {

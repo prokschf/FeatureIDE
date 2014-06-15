@@ -24,6 +24,8 @@ import java.util.LinkedList;
 
 import org.eclipse.core.resources.IFile;
 
+import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 import de.ovgu.featureide.core.fstmodel.FSTField;
 import de.ovgu.featureide.core.fstmodel.FSTMethod;
@@ -92,6 +94,9 @@ public class ClassBuilder {
 		if ("hs".equals(fileExtension)) {
 			return new HaskellClassBuilder(builder);
 		}
+		if ("asm".equals(fileExtension)) {
+			return new AsmetaLClassBuilder(builder);
+		}
 		return new ClassBuilder(builder);
 	}
 	
@@ -131,6 +136,8 @@ public class ClassBuilder {
 		return field;
 	}
 	
+	public void caseSignatureDeclaration(FSTNode node) {}
+	
 	public void caseJMLSpecCaseSeq(FSTTerminal terminal) {}
 	
 	public void caseClassDeclarationType(FSTTerminal terminal) {}
@@ -145,5 +152,5 @@ public class ClassBuilder {
 	
 	public void caseModifiers(FSTTerminal terminal) {}
 
-	public void caseJMLInvariant(FSTTerminal terminal) {}
+	public void caseInvariant(FSTTerminal terminal) {}
 }
