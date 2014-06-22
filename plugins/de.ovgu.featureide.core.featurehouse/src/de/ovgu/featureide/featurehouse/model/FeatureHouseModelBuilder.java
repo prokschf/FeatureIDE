@@ -246,6 +246,10 @@ public class FeatureHouseModelBuilder implements FHNodeTypes {
 						classBuilder.caseJMLSpecCaseSeq(terminal);
 					} else if (JML_INVARIANT.equals(type)) {
 						classBuilder.caseInvariant(terminal);
+					} else if (ASMETAL_NAMED_INVARIANT.equals(type)) {
+						classBuilder.caseInvariant(terminal);
+					} else if (ASMETAL_UNNAMED_INVARIANT.equals(type)) {
+						classBuilder.caseInvariant(terminal);
 					} else if (FHNodeTypes.ASMETAL_RULE.equals(type)) {
 						classBuilder.caseMethodDeclaration(terminal);
 					}
@@ -260,6 +264,8 @@ public class FeatureHouseModelBuilder implements FHNodeTypes {
 						classFragmentStack.push(newFragment);
 					} else if (ASMETAL_SIGNATURE.equals(type)) {
 						classBuilder.caseSignatureDeclaration(child);
+					} else if (ASMETAL_INITIALIZATION.equals(type)) {
+						classBuilder.caseInitialization(child);						
 					} else {
 						classFragmentStack.push(classFragmentStack.peek());
 					}

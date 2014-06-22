@@ -78,6 +78,11 @@ public interface FHNodeTypes {
 	static final String ASMETAL_MODULE_DECLARATION = "ModuleDeclaration";
 	static final String ASMETAL_RULE = "RuleDeclaration";
 	static final String ASMETAL_FUNCTION = "Function";
+	static final String ASMETAL_DOMAIN = "Domain";
 	static final String ASMETAL_INVARIANT = "Invariant";
 	static final String ASMETAL_SIGNATURE = "Signature";
+	static final String ASMETAL_UNNAMED_INVARIANT = "UnnamedInvariant";
+	static final String ASMETAL_NAMED_INVARIANT = "NamedInvariant";
+	static final String ASMETAL_INITIALIZATION = "Initialization";
+	
 }

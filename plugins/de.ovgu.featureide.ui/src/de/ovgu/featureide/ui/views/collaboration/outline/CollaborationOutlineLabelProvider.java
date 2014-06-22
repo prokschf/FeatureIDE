@@ -30,6 +30,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.ovgu.featureide.core.CorePlugin;
+import de.ovgu.featureide.core.fstmodel.FSTAsmetaLDomain;
+import de.ovgu.featureide.core.fstmodel.FSTAsmetaLInitialization;
+import de.ovgu.featureide.core.fstmodel.FSTAstemaLFunction;
 import de.ovgu.featureide.core.fstmodel.FSTClass;
 import de.ovgu.featureide.core.fstmodel.FSTContractedRole;
 import de.ovgu.featureide.core.fstmodel.FSTFeature;
@@ -71,7 +74,17 @@ public class CollaborationOutlineLabelProvider extends OutlineLabelProvider impl
 	public Image getImage(Object element) {
 		if (element instanceof RoleElement) {
 			RoleElement fstModelElement = (RoleElement) element;
-			if (fstModelElement instanceof FSTField) {
+			if (fstModelElement instanceof FSTAsmetaLDomain)
+			{
+				return IMAGE_FIELD_PUBLIC;
+			} else if (fstModelElement instanceof FSTAstemaLFunction)
+			{
+				return IMAGE_FIELD_PRIVATE;
+			} else if (fstModelElement instanceof FSTAsmetaLInitialization)
+			{
+				return IMAGE_METHODE_PROTECTED;
+			} else if (fstModelElement instanceof FSTField) 
+			{
 				FSTField field = (FSTField) fstModelElement;
 				if (field.isPrivate())
 					return IMAGE_FIELD_PRIVATE;

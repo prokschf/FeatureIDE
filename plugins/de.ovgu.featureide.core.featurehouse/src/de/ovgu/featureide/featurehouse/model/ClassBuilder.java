@@ -153,4 +153,6 @@ public class ClassBuilder {
 	public void caseModifiers(FSTTerminal terminal) {}
 
 	public void caseInvariant(FSTTerminal terminal) {}
+	
+	public void caseInitialization(FSTNode node) {}
 }

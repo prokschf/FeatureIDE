@@ -32,6 +32,9 @@ import de.ovgu.featureide.core.fstmodel.FSTInvariant;
 import de.ovgu.featureide.core.fstmodel.FSTModel;
 import de.ovgu.featureide.core.fstmodel.RoleElement;
 import de.ovgu.featureide.featurehouse.model.*;
+import de.ovgu.featureide.core.fstmodel.FSTAstemaLFunction;
+import de.ovgu.featureide.core.fstmodel.FSTAsmetaLDomain;
+import de.ovgu.featureide.core.fstmodel.FSTAsmetaLInitialization;
 
 /**
  * Builds Classes for the {@link FSTModel} for <code>FeatureHouse</code> Haskel files.
@@ -58,17 +61,36 @@ public class AsmetaLClassBuilder extends ClassBuilder {
 	@Override
 	void caseFieldDeclaration(FSTTerminal terminal) 
 	{
-		String begin = terminal.getBody().substring(0, terminal.getBody().indexOf(":"));
-		String end = terminal.getBody().substring(terminal.getBody().indexOf(":") + 1);
-		String[] startTokens = begin.split(" ");
-		String name = startTokens[startTokens.length - 1];
-		String[] endTokens = end.split("->");
-		String type = endTokens[endTokens.length - 1];
 		
-		FSTField field = new FSTField(name, type, startTokens[0], terminal.getBody(), terminal.beginLine, terminal.endLine);
-		modelBuilder.getCurrentClassFragment().add(field);
+		if (terminal.getType().equals("Domain"))
+		{
+			
+			String startTokens = "";
+			String type = "";
+
+			FSTAsmetaLDomain field = new FSTAsmetaLDomain(terminal.getName(), type, startTokens, terminal.getBody(), terminal.beginLine, terminal.endLine);
+			modelBuilder.getCurrentClassFragment().add(field);
+		} else if (terminal.getType().equals("Function"))
+		{
+			String begin = terminal.getBody().substring(0, terminal.getBody().indexOf(":"));
+			String end = terminal.getBody().substring(terminal.getBody().indexOf(":") + 1);
+			String[] startTokens = begin.split(" ");
+			String name = startTokens[startTokens.length - 1];
+			String[] endTokens = end.split("->");
+			String type = endTokens[endTokens.length - 1];
+			
+			FSTAstemaLFunction field = new FSTAstemaLFunction(name, type, startTokens[0], terminal.getBody(), terminal.beginLine, terminal.endLine);
+			modelBuilder.getCurrentClassFragment().add(field);
+		}
 	}
 	
+	@Override
+	public void caseInitialization(FSTNode node)
+	{		
+		FSTAsmetaLInitialization field = new FSTAsmetaLInitialization(node.getName(), "Initialization", "", "", 0, 0);
+		modelBuilder.getCurrentClassFragment().add(field);
+	}
+		
 	@Override
 	public void caseSignatureDeclaration(FSTNode node)
 	{
@@ -80,7 +102,9 @@ public class AsmetaLClassBuilder extends ClassBuilder {
 			if (FHNodeTypes.ASMETAL_FUNCTION.equals(type)) {
 				caseFieldDeclaration(terminal);
 			} else if (FHNodeTypes.ASMETAL_INVARIANT.equals(type)) {
-				caseInvariant(terminal);
+				caseInvariant(terminal);			
+			} else if (FHNodeTypes.ASMETAL_DOMAIN.equals(type)) {
+				caseFieldDeclaration(terminal);
 			}					
 		}
 	}
