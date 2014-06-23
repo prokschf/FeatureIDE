@@ -28,6 +28,8 @@ definitions:
 			minutes := (minutes + 1) mod 60
 		endpar
 
+
+
 default init s0:
 	function minutes = 0
 	function hours = 0

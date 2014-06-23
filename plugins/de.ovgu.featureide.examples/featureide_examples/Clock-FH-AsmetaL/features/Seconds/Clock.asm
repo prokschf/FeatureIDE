@@ -27,6 +27,8 @@ definitions:
 			seconds := (seconds + 1) mod 60
 		endpar
 
+
+
 default init s0:
 	function seconds = 0
 	function minutes = 0
